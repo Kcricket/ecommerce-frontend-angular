@@ -1,0 +1,62 @@
+<mat-tab-group animationDuration="1500ms" class="tab-group">
+  <mat-tab label="Add Product" class="tab-product">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-product-container">
+      <mat-form-field>
+        <input matInput formControlName="title" placeholder="Title" required>
+        <mat-error *ngIf="productForm.get('title').invalid">Title is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="price" placeholder="Price" required>
+        <mat-error *ngIf="productForm.get('price').invalid">Price is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="weight" placeholder="Weight" required>
+        <mat-error *ngIf="productForm.get('weight').invalid">Weight is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="volume" placeholder="Volume" required>
+        <mat-error *ngIf="productForm.get('volume').invalid">Volume is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="quantityInStock" placeholder="Quantity in Stock" required>
+        <mat-error *ngIf="productForm.get('quantityInStock').invalid">Quantity in Stock is required</mat-error>
+      </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="category" placeholder="Category">
+      <mat-option *ngFor="let category of categories" [value]="{ id: category.id, name: category.name}">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+      <div formArrayName="parameters" class="parameter-container">
+        <div *ngFor="let parameter of parameters.controls; let i = index;">
+          <div [formGroupName]="i">
+            <mat-form-field class="parameter-input">
+              <input matInput formControlName="key" placeholder="Parameter Key" required>
+              <mat-error *ngIf="getParameterFormControl(i, 'key').invalid">Parameter Key is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="parameter-input">
+              <input matInput formControlName="value" placeholder="Parameter Value" required>
+              <mat-error *ngIf="getParameterFormControl(i, 'value').invalid">Parameter Value is required</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button type="button" (click)="removeParameter(i)" color="warn">Remove</button>
+          </div>
+        </div>
+        <button mat-raised-button type="button" (click)="addParameter()" color="accent">Add Parameter</button>
+      </div>
+
+
+    <button mat-raised-button color="primary" type="submit">Add Product</button>
+    </form>
+  </mat-tab>
+
+
+
+
+
+  <mat-tab label="Second">Content 2</mat-tab>
+  <mat-tab label="Third">Content 3</mat-tab>
+</mat-tab-group>

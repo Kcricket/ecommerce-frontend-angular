@@ -1,0 +1,32 @@
+
+<div class="app-container">
+  <mat-toolbar>
+    <a routerLink="/login">
+      logout
+     </a>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <a routerLink="/">
+        <mat-icon>home</mat-icon>
+       </a>
+    </button>
+    <span>My STORE</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+     <a routerLink="/login">
+      <mat-icon>logout</mat-icon>
+     </a>
+   </button>
+   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <a routerLink="/profile">
+      <mat-icon>account_circle</mat-icon>
+     </a>
+   </button>
+  </mat-toolbar>
+  <div class="content" style="width: 100%;display: block;" role="main">
+    <router-outlet></router-outlet>
+
+  </div>
+
+
+
+</div>

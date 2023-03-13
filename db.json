@@ -1,0 +1,13 @@
+{
+  "user": [
+    {
+      "id": "abuelo",
+      "name": "obeso",
+      "password": "Mierda@33",
+      "email": "caca@caca.caca",
+      "gender": "female",
+      "role": "",
+      "isactive": false
+    }
+  ]
+}
