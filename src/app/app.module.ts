@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/material.module';
 
 import {ReactiveFormsModule} from "@angular/forms"
-import {HttpClientModule} from "@angular/common/http"
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http"
 import {ToastrModule} from "ngx-toastr";
 
 import { LoginComponent } from './login/login.component';
@@ -20,6 +20,10 @@ import { AdminComponent } from './admin/admin.component';
 
 
 import { ForbiddenComponent } from './forbidden/forbidden.component'
+import { AuthGuard } from './guard/auth.guard';
+import { UserService } from './service/user.service';
+import { AuthInterceptor } from './guard/auth.interceptor';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -32,7 +36,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component'
     UpdatepopupComponent,
     ProfileComponent,
     AdminComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,15 @@ import { ForbiddenComponent } from './forbidden/forbidden.component'
     HttpClientModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi:true
+    },
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

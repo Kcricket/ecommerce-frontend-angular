@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div class="home-container">
+  <mat-card class="home-header">
+    <mat-card-header>
+      <mat-card-title>
+        Welcome to the Home Page
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        This is the home page of the application.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-grid-list cols="3" rowHeight="2:1">
+    <mat-grid-tile class="product-container" [colspan]="2" [rowspan]="2">1</mat-grid-tile>
+    <mat-grid-tile class="product-container">2</mat-grid-tile>
+    <mat-grid-tile class="product-container">3</mat-grid-tile>
+    <mat-grid-tile class="product-container" [rowspan]="2">4</mat-grid-tile>
+    <mat-grid-tile class="product-container">5</mat-grid-tile>
+    <mat-grid-tile class="product-container">6</mat-grid-tile>
+    <mat-grid-tile class="product-container">7</mat-grid-tile>
+    <mat-grid-tile class="product-container">8</mat-grid-tile>
+    <mat-grid-tile class="product-container">9</mat-grid-tile>
+
+  </mat-grid-list>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div class="cart-container">
+  <mat-card class="cart-header">
+    <mat-card-header>
+      <mat-card-title>
+        Welcome to the Cart Page
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        This is the cart page of the application.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-vertical-stepper [linear]="false" #stepper animationDuration="600" class="stepper">
+    <mat-step [stepControl]="addressForm" errorMessage="Some data is required.">
+      <form [formGroup]="addressForm" class="form-stepper">
+        <ng-template matStepLabel>Fill out your Address</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Country" formControlName="Country" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="City" formControlName="City" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="PostCode" formControlName="PostCode" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Street" formControlName="Street" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Home" formControlName="Home" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Apartment" formControlName="Apartment" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="creditCardForm" errorMessage="Some data is required.">
+      <form [formGroup]="creditCardForm" class="form-stepper">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Name on Card" formControlName="CardHolder" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Card Number" formControlName="CardNumber" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Expiration Date" formControlName="ExpirationDate" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="CVV" formControlName="Cvv" required>
+        </mat-form-field>
+
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+
+
+
+</div>

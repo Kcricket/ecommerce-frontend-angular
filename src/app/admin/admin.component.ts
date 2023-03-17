@@ -63,6 +63,7 @@ export class AdminComponent {
 
   onSubmit() {
     console.log(this.productForm.value);
+    // Here we convert the array of parameters to a map because the backend expects a map.
     var paramsMap = this.productForm.value.parameters.reduce(function(map, obj) {
       map[obj.key] = obj.value;
       return map;

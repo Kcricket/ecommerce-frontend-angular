@@ -13,6 +13,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -30,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     MatToolbarModule,
     MatIconModule,
     MatTabsModule,
-    FormsModule
+    FormsModule,
+    MatGridListModule,
+    MatStepperModule
 
   ]
 })

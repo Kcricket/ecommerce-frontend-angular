@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,17 +11,41 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProfileComponent{
   profileForm: FormGroup;
+  addressForm: FormGroup;
+  passwordForm: FormGroup;
+  //Change any later
+  user: any;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService
   ) {
-    this.profileForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      bio: ['']
+
+  }
+
+  ngOnInit() {
+    //this.user = this.userService.getUser();
+
+    this.profileForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      bio: new FormControl('', [Validators.required, Validators.minLength(10)])
+    });
+
+    this.addressForm = new FormGroup({
+      street: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      city: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      state: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      zip: new FormControl('', [Validators.required, Validators.minLength(3)])
+    });
+
+    this.passwordForm = new FormGroup({
+      currentPassword: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
   }
+
 
   saveProfile() {
     if (this.profileForm.valid) {
