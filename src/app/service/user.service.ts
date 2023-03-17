@@ -17,7 +17,7 @@ export class UserService {
   public login(loginData: any) {
     console.log(loginData)
 
-    return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData);
+    return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData, { headers: this.requestHeader });
   }
 
   public forUser() {
