@@ -3,6 +3,9 @@
 mat-tab-group{
   background-color:black;
 }
+mat-tab{
+  height: 100%;
+}
 
 .form-product-container{
   display: flex;
@@ -69,5 +72,19 @@ button{
   background-color: red;
 
   width: 100%;
+  margin: 10px;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.user-card{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   margin: 10px;
 }

@@ -23,7 +23,13 @@ export class UserService {
       headers: this.requestHeader,
     });
   }
+  //-----------------Admin User Management--------------------------
 
+  public getUsersWithMostOrders() {
+    return this.httpclient.get(this.PATH_OF_API + '/getUsersWithMostOrders', {
+      responseType: 'json',
+    });
+  }
   // --------------User Address----------------
   public saveAddress(addressData: Address){
     return this.httpclient.post(this.PATH_OF_API + '/addUserAddress', addressData, {

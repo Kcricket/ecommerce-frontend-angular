@@ -9,6 +9,9 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
 import { AddressUX } from '../models/AddressUX.model';
 import { AuthService } from '../service/auth.service';
+import { Cart } from '../models/Cart.model';
+import { Order } from '../models/Order.model';
+import { Address } from '../models/Address.model';
 
 
 @Component({
@@ -23,9 +26,11 @@ import { AuthService } from '../service/auth.service';
 export class CartComponent {
   addressForm: FormGroup;
   creditCardForm: FormGroup;
-  //Create a random list of items for cart with name description price and image
   items:any;
   userAddresses: AddressUX[] = [];
+
+
+
 
 
   finalPrice: number = 0;
@@ -46,8 +51,11 @@ export class CartComponent {
   ) {}
 
   ngOnInit() {
-    this.getCartItems();
-    this.getUserAddresses()
+    if(this.isLoggedIn()){
+      this.getCartItems();
+      this.getUserAddresses()
+    }
+
     this.addressForm = new FormGroup({
       Country: new FormControl('', [Validators.required, Validators.minLength(3)]),
       City: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -63,6 +71,36 @@ export class CartComponent {
       ExpirationDate: new FormControl('', [Validators.required, Validators.minLength(3)]),
       Cvv: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
+
+  }
+  placeOrder(){
+    //if user isLoggedin
+
+    if(!this.isLoggedIn()){
+      this.toastr.error('You must be logged in and have an address to place an order', 'Error');
+    }else{
+      let address: AddressUX = this.userAddresses[0];
+      let items:Cart[] = this.items;
+      let paymentMethod= {
+        "name": this.creditCardForm.value.CardHolder,
+        "cardNumber": this.creditCardForm.value.CardNumber,
+        "expirationDate": this.creditCardForm.value.ExpirationDate,
+        "cvv": this.creditCardForm.value.Cvv
+      };
+      let order:Order = {
+        userAddress: address,
+        cart : items,
+        paymentMethod: paymentMethod,
+        deliveryMethod: "NORMAL"
+      }
+      this.productService.placeOrder(order).subscribe((data: any) => {
+        this.toastr.success('Order placed', 'Success');
+      }
+      , (error) => {
+        console.log(error);
+        this.toastr.error('Order not placed', 'Error');
+      });
+    }
 
   }
 
@@ -100,6 +138,8 @@ export class CartComponent {
       console.log(error);
     });
   }
+
+
 
   isLoggedIn(){
     return this.authService.isLoggedIn();

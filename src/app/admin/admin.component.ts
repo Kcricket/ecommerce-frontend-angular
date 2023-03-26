@@ -10,6 +10,11 @@ import { Product } from '../models/Product.model';
 import { ProductService } from '../service/productService/product.service';
 import { FileHandle } from '../models/File-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatTableDataSource } from '@angular/material/table';
+import { OrderUX } from '../models/OrderUX.model';
+import { User } from '../models/User.model';
+import { UserService } from '../service/user.service';
+import { ProductUX } from '../models/ProductUX.model';
 
 @Component({
   selector: 'app-admin',
@@ -23,6 +28,14 @@ export class AdminComponent {
   productFormData: FormData;
   categoryForm: FormGroup;
   product: Product;
+
+  // Table of orders
+  orders:OrderUX[]=[];
+  datasource = new MatTableDataSource<OrderUX>(this.orders);
+  displayedColumns: string[] = ['product name', 'price', 'date', 'order status'];
+  //Statistics
+  topUsers: User[] = [];
+  topProducts: ProductUX[] = [];
 
   sampleProduct:Product = {
       title: "Sample Product",
@@ -43,6 +56,7 @@ export class AdminComponent {
   constructor(
     //private fb: FormBuilder,
     private productService: ProductService,
+    private userService: UserService,
     private builder: FormBuilder,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer
@@ -50,7 +64,11 @@ export class AdminComponent {
 
 
   ngOnInit() {
+    this.getAllOrders();
+    this.getTopUsers();
+    this.getTopProducts();
     this.productService.getCategories().subscribe(categories => this.categories = categories);
+
     this.productForm = this.builder.group({
       title: this.builder.control('', Validators.compose([Validators.required])),
       price: this.builder.control('', Validators.compose([Validators.required])),
@@ -65,9 +83,25 @@ export class AdminComponent {
     this.categoryForm = this.builder.group({
       name: this.builder.control('', Validators.compose([Validators.required]))
     });
-
-
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
+    this.datasource.filter = filterValue.trim().toLowerCase();
+  }
+  getAllOrders() {
+    this.productService.getAllOrders().subscribe(
+      (data:any) => {
+        this.datasource = data;
+        console.log(this.orders);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   get parameters(): FormArray {
     return this.productForm.get('parameters') as FormArray;
   }
@@ -75,6 +109,32 @@ export class AdminComponent {
   getParameterFormControl(index: number, controlName: string) {
     return this.parameters.at(index).get(controlName);
   }
+
+  //Stats mthods
+  getTopUsers() {
+    this.userService.getUsersWithMostOrders().subscribe(
+      (data:any) => {
+        this.topUsers = data;
+        console.log(this.topUsers);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTopProducts() {
+    this.productService.getTopProducts().subscribe(
+      (data:any) => {
+        this.topProducts = data;
+        console.log(this.topProducts);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 
   addParameter() {
     this.parameters.push(this.builder.group({

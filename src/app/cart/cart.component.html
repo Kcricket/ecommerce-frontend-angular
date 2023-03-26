@@ -43,79 +43,57 @@
         </mat-card>
 
            <!-- mat-card displaying address data -->
-      <mat-card class="address_card">
-        <mat-card-header>
-          <mat-card-title>
-            <h2>Address</h2>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{userAddresses[0]?.country}}
-          </p>
-          <mat-divider></mat-divider>
-          <p>
-            {{userAddresses[0]?.city}}
-          </p>
-          <mat-divider></mat-divider>
+           <div class="address-grid" *ngFor="let address of userAddresses">
+            <mat-card class="address-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <h2>Address</h2>
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p>
+                  {{address.country}}
+                </p>
+                <mat-divider></mat-divider>
+                <p>
+                  {{address.city}}
+                </p>
+                <mat-divider></mat-divider>
 
-          <p>
-            {{userAddresses[0]?.postalCode}}
-          </p>
-          <mat-divider></mat-divider>
+                <p>
+                  {{address.postalCode}}
+                </p>
+                <mat-divider></mat-divider>
 
-          <p>
-            {{userAddresses[0]?.street}}
-          </p>
-          <mat-divider></mat-divider>
+                <p>
+                  {{address.street}}
+                </p>
+                <mat-divider></mat-divider>
 
-          <p>
-            {{userAddresses[0]?.home}}
-          </p>
-          <mat-divider></mat-divider>
+                <p>
+                  {{address.home}}
+                </p>
+                <mat-divider></mat-divider>
 
-          <p>
-            {{userAddresses[0]?.apartment}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <!-- <button mat-button (click)="editAddress()">Edit</button> -->
-        </mat-card-actions>
-      </mat-card>
+                <p>
+                  {{address.apartment}}
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <!-- <button mat-button (click)="editAddress()">Edit</button> -->
+              </mat-card-actions>
+            </mat-card>
+           </div>
+
   </mat-card>
 
 
   <mat-vertical-stepper [linear]="false" #stepper animationDuration="600" class="stepper">
-    <mat-step [stepControl]="addressForm" errorMessage="Some data is required." *ngIf="!userAddresses[0]">
-      <form [formGroup]="addressForm" class="form-stepper">
-        <ng-template matStepLabel>Fill out your Address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Country" formControlName="Country" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="City" formControlName="City" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="PostCode" formControlName="PostCode" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Street" formControlName="Street" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Home" formControlName="Home" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Apartment" formControlName="Apartment" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
+
 
     <mat-step [stepControl]="creditCardForm" errorMessage="Some data is required.">
       <form [formGroup]="creditCardForm" class="form-stepper">
-        <ng-template matStepLabel>Fill out your address</ng-template>
+        <ng-template matStepLabel>Fill out your Card Credentials</ng-template>
         <mat-form-field>
           <input matInput placeholder="Name on Card" formControlName="CardHolder" required>
         </mat-form-field>
@@ -142,6 +120,8 @@
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="placeOrder()">ORDER</button>
+
       </div>
     </mat-step>
   </mat-vertical-stepper>

@@ -8,6 +8,8 @@ import { User } from '../models/User.model';
 import { Address } from '../models/Address.model';
 import { AddressUX } from '../models/AddressUX.model';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest.model';
+import { ProductService } from '../service/productService/product.service';
+import { OrderUX } from '../models/OrderUX.model';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -20,10 +22,11 @@ export class ProfileComponent{
   //Change any later
   user: User;
   userAddressesUX: AddressUX[] =[];
-
+  orders: OrderUX[] = [];
   constructor(
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private productService: ProductService,
   ) {
 
   }
@@ -32,6 +35,7 @@ export class ProfileComponent{
     //this.user = this.userService.getUser();
     this.loadUserAddresses();
     this.loadUserData();
+    this.getUserOrders();
     console.log(this.user);
     this.profileForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -157,7 +161,15 @@ export class ProfileComponent{
     }
 
   }
-
+  getUserOrders(){
+    this.productService.getUserOrders().subscribe((data: any) => {
+      console.log(data);
+      this.orders = data;
+    }
+    , (error) => {
+      console.log(error);
+    });
+  }
 
   cancelProfile() {
     // TODO: Implement cancel logic
