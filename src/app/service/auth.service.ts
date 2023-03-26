@@ -13,7 +13,7 @@ export class AuthService {
 
   RegisterUser(inputdata:any){
     console.log(inputdata)
-    return this.http.post(this.apiurl+"/registerNewUser" ,inputdata,  { headers: this.requestHeader });
+    return this.http.post(this.apiurl+"/registerNewUser" ,inputdata,  { headers: this.requestHeader } );
   }
 
   ///////////////

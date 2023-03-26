@@ -1,8 +1,8 @@
 import { Category } from './Category.model';
 import { FileHandle } from "./File-handle.model";
 
-export interface Product {
-  //id: number;
+export interface ProductUX {
+  id: number;
   title: string;
   price: number;
   category: Category;

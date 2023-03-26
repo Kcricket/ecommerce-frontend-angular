@@ -4,6 +4,7 @@
   align-items: center;
   padding: 10px;
 }
+
 mat-card{
   width: 75%;
 }
@@ -13,4 +14,7 @@ mat-card{
 .login-form{
   display: flex;
   flex-direction: column;
+}
+.button-container button{
+  margin: 10px;
 }

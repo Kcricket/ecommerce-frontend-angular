@@ -1,5 +1,26 @@
-<mat-tab-group animationDuration="1500ms" class="tab-group">
-  <mat-tab label="Add Product" class="tab-product">
+<mat-tab-group animationDuration="500ms" class="tab-group">
+  <mat-tab label="Add New Product" class="tab-product">
+
+    <div class="image-container">
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" placeholder="Image" required>
+       <div class="mt-5">
+        <div class="row">
+          <mat-grid-list cols="4" rowHeight="1:1">
+            <mat-grid-tile *ngFor="let file of sampleProduct.productImages; let i = index">
+              <div style="position: relative;">
+                <span class="btn-remove" (click)="removeImage(i)">x</span>
+                <img [src]="file.url" alt="Image" class="image-showcase">
+              </div>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+        </div>
+          <!-- Now we display all of sampleProduct.productImages -->
+
+        </div>
+
+
+    </div>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-product-container">
       <mat-form-field>
         <input matInput formControlName="title" placeholder="Title" required>
@@ -57,6 +78,14 @@
 
 
 
-  <mat-tab label="Second">Content 2</mat-tab>
+  <mat-tab label="Add New Category">
+    <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" class="form-category-container">
+      <mat-form-field>
+        <input matInput formControlName="name" placeholder="Category Name" required>
+        <mat-error *ngIf="categoryForm.get('name').invalid">Category Name is required</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Add Category</button>
+    </form>
+  </mat-tab>
   <mat-tab label="Third">Content 3</mat-tab>
 </mat-tab-group>

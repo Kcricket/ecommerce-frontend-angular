@@ -11,17 +11,44 @@
       </p>
     </mat-card-content>
   </mat-card>
+  <div class="search-form-div">
+    <form class="search-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Search</mat-label>
 
-  <mat-grid-list cols="3" rowHeight="2:1">
-    <mat-grid-tile class="product-container" [colspan]="2" [rowspan]="2">1</mat-grid-tile>
-    <mat-grid-tile class="product-container">2</mat-grid-tile>
-    <mat-grid-tile class="product-container">3</mat-grid-tile>
-    <mat-grid-tile class="product-container" [rowspan]="2">4</mat-grid-tile>
-    <mat-grid-tile class="product-container">5</mat-grid-tile>
-    <mat-grid-tile class="product-container">6</mat-grid-tile>
-    <mat-grid-tile class="product-container">7</mat-grid-tile>
-    <mat-grid-tile class="product-container">8</mat-grid-tile>
-    <mat-grid-tile class="product-container">9</mat-grid-tile>
+        <input matInput
+        class="search-input"
+        placeholder="Search"
+        #searchKeyword
+        (keyup)="searchByKeyword(searchKeyword.value)"
+        name="searchKey"
+        [formControl]="searchFormControl"
+        >
+
+      </mat-form-field>
+    </form>
+  </div>
+
+
+
+
+    <mat-grid-list [cols]="mybreakpoint" (window:resize)="handleSize($event)" class="grid-list">
+    <mat-grid-tile class="product-container" *ngFor="let product of products">
+      <mat-card class="product-card">
+        <mat-card-header class="card-product-header">
+            <mat-card-title>{{product.title}}</mat-card-title>
+            <mat-card-subtitle>{{product.category.name}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="product.productImages[0].url" alt="Photo of a Shiba Inu" class="product-image">
+        <mat-card-content>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>VIEW</button>
+          <button mat-button (click)="addToCart(product.id)">ADD TO CART</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
 
   </mat-grid-list>
 

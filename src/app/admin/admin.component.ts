@@ -8,6 +8,8 @@ import { Category } from '../models/Category.model';
 import { Product } from '../models/Product.model';
 
 import { ProductService } from '../service/productService/product.service';
+import { FileHandle } from '../models/File-handle.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin',
@@ -18,6 +20,23 @@ export class AdminComponent {
   categoriesx: any = null;
   productForm: FormGroup;
   categories: any;
+  productFormData: FormData;
+  categoryForm: FormGroup;
+  product: Product;
+
+  sampleProduct:Product = {
+      title: "Sample Product",
+      price: 100,
+      category: {id: 1, name: "Sample Category"},
+      parameters: new Map<string, string>([
+        ["key1", "value1"],
+        ["key2", "value2"]
+      ]),
+      weight: 10,
+      volume: 10,
+      quantityInStock: 10,
+      productImages: []
+  }
   //parameters: any;
 
 
@@ -25,7 +44,8 @@ export class AdminComponent {
     //private fb: FormBuilder,
     private productService: ProductService,
     private builder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sanitizer: DomSanitizer
     ) {}
 
 
@@ -41,6 +61,12 @@ export class AdminComponent {
       parameters: this.builder.array([])
 
     });
+
+    this.categoryForm = this.builder.group({
+      name: this.builder.control('', Validators.compose([Validators.required]))
+    });
+
+
   }
   get parameters(): FormArray {
     return this.productForm.get('parameters') as FormArray;
@@ -60,18 +86,80 @@ export class AdminComponent {
   removeParameter(index: number) {
     this.parameters.removeAt(index);
   }
+  onFileSelected(event) {
+    //Check if there are multiple files
+    if(event.target.files){
+      const file = event.target.files[0];
+      const fileHandle : FileHandle = {
+        file: file,
+        url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file))
+      }
+    this.sampleProduct.productImages.push(fileHandle);
+    }
+  }
 
-  onSubmit() {
-    console.log(this.productForm.value);
-    // Here we convert the array of parameters to a map because the backend expects a map.
+  //Add a new category
+  addCategory() {
+    let category : Category = {
+      id: null,
+      name: this.categoryForm.value.name
+    }
+    this.productService.addCategory(category).subscribe(
+      data => {
+        this.toastr.success('Category added successfully');
+        this.productService.getCategories().subscribe(categories => this.categories = categories);
+      },
+      error => {
+        this.toastr.error('Error adding category');
+      }
+    );
+  }
+  //Method to prepare From Data to send to the server
+  public prepareFormData(product: Product) {
+    //Convert parameters as Map
     var paramsMap = this.productForm.value.parameters.reduce(function(map, obj) {
       map[obj.key] = obj.value;
       return map;
     }, {});
     console.log(paramsMap);
 
-    this.productForm.value.parameters = paramsMap;
-    this.productService.addNewProduct(this.productForm.value).subscribe(
+    product.parameters = paramsMap;
+
+    const formData = new FormData();
+
+    //This is the data the server wants, a product and a list of images
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(product)], {type: 'application/json'})
+    );
+    //Here we append each image to the form data
+    for (let i = 0; i < product.productImages.length; i++) {
+      formData.append(
+        'imageFile',
+        product.productImages[i].file,
+        product.productImages[i].file.name
+
+      );
+    }
+    return formData;
+  }
+  onSubmit() {
+     var product ={
+      title: this.productForm.value.title,
+      price: this.productForm.value.price,
+      category: this.productForm.value.category,
+      parameters: this.productForm.value.parameters,
+      weight: this.productForm.value.weight,
+      volume: this.productForm.value.volume,
+      quantityInStock: this.productForm.value.quantityInStock,
+      // For some reason i cant retrieve the images from the productForm, so i use the sample product
+      productImages: this.sampleProduct.productImages
+    }
+    this.productFormData = this.prepareFormData(product);
+    console.log(this.productForm.value);
+    // Here we convert the array of parameters to a map because the backend expects a map.
+
+    this.productService.addNewProduct(this.productFormData).subscribe(
       (response: any) => {
         console.log(response);
 
@@ -85,6 +173,9 @@ export class AdminComponent {
         console.log(error);
       }
     );
+  }
+  removeImage(index: number) {
+    this.sampleProduct.productImages.splice(index, 1);
   }
 
 

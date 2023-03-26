@@ -1,4 +1,21 @@
-.example-form{
+.register-container{
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100;
+  padding: 10px;
+}
+.button-container button{
+  margin: 10px;
+}
+
+mat-card{
+  width: 75%;
+}
+
+
+.register-form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

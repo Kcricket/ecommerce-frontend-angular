@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  width: 70%;
   background-color: #f5f5f5;
   padding: 20px;
   margin: 20px;
@@ -30,5 +30,52 @@
   flex-direction: column;
   justify-content: center;
 }
+.cart-products-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.cart-product-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 20%;
+  background-color: #f5f5f5;
+
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.card-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+
+}
+
+.item-img{
+  width: 100px;
+  height: 100px;
+  max-height: 20%;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.divider-vertical{
+  height: 80%;
+}
+
+.address-card{
+  width: 100%;
+}
 
 /* Table stuff */
+
+

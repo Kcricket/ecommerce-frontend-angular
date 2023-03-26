@@ -15,8 +15,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatStepperModule} from '@angular/material/stepper';
-
-
+import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from "@angular/material/divider";
+import {DialogModule} from '@angular/cdk/dialog';
 
 @NgModule({
   exports:[
@@ -34,7 +35,10 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatTabsModule,
     FormsModule,
     MatGridListModule,
-    MatStepperModule
+    MatStepperModule,
+    MatListModule,
+    MatDividerModule,
+    DialogModule
 
   ]
 })

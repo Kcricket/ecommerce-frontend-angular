@@ -24,6 +24,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { UserService } from './service/user.service';
 import { AuthInterceptor } from './guard/auth.interceptor';
 import { CartComponent } from './cart/cart.component';
+import { ProductPreviewComponent } from './product-preview/product-preview.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CartComponent } from './cart/cart.component';
     ProfileComponent,
     AdminComponent,
     ForbiddenComponent,
-    CartComponent
+    CartComponent,
+    ProductPreviewComponent
   ],
   imports: [
     BrowserModule,

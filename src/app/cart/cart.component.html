@@ -12,8 +12,81 @@
     </mat-card-content>
   </mat-card>
 
+  <mat-card class="cart-products-container">
+        <mat-card class="cart-product-card" *ngFor="let product of items">
+          <mat-divider vertical class="divider-vertical"></mat-divider>
+          <mat-card-header>
+            <mat-card-title>
+              {{product.product.title}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="card-content">
+              {{product.product.price}}EUR
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button (click)="removeProductFromCart(product.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card class="cart-header">
+          <mat-card-header>
+            <mat-card-title>
+              Total Price
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{this.finalPrice}}EUR
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+           <!-- mat-card displaying address data -->
+      <mat-card class="address_card">
+        <mat-card-header>
+          <mat-card-title>
+            <h2>Address</h2>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{userAddresses[0]?.country}}
+          </p>
+          <mat-divider></mat-divider>
+          <p>
+            {{userAddresses[0]?.city}}
+          </p>
+          <mat-divider></mat-divider>
+
+          <p>
+            {{userAddresses[0]?.postalCode}}
+          </p>
+          <mat-divider></mat-divider>
+
+          <p>
+            {{userAddresses[0]?.street}}
+          </p>
+          <mat-divider></mat-divider>
+
+          <p>
+            {{userAddresses[0]?.home}}
+          </p>
+          <mat-divider></mat-divider>
+
+          <p>
+            {{userAddresses[0]?.apartment}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <!-- <button mat-button (click)="editAddress()">Edit</button> -->
+        </mat-card-actions>
+      </mat-card>
+  </mat-card>
+
+
   <mat-vertical-stepper [linear]="false" #stepper animationDuration="600" class="stepper">
-    <mat-step [stepControl]="addressForm" errorMessage="Some data is required.">
+    <mat-step [stepControl]="addressForm" errorMessage="Some data is required." *ngIf="!userAddresses[0]">
       <form [formGroup]="addressForm" class="form-stepper">
         <ng-template matStepLabel>Fill out your Address</ng-template>
         <mat-form-field>
@@ -39,6 +112,7 @@
         </div>
       </form>
     </mat-step>
+
     <mat-step [stepControl]="creditCardForm" errorMessage="Some data is required.">
       <form [formGroup]="creditCardForm" class="form-stepper">
         <ng-template matStepLabel>Fill out your address</ng-template>

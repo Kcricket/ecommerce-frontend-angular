@@ -25,7 +25,6 @@ intercept(
   }
 
   const token = this.authService.getToken();
-
   req = this.addToken(req, token);
 
   return next.handle(req).pipe(

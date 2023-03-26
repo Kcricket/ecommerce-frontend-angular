@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import { Address } from '../models/Address.model';
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +19,39 @@ export class UserService {
   public login(loginData: any) {
     console.log(loginData)
 
-    return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData, { headers: this.requestHeader });
+    return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData, {
+      headers: this.requestHeader,
+    });
   }
 
+  // --------------User Address----------------
+  public saveAddress(addressData: Address){
+    return this.httpclient.post(this.PATH_OF_API + '/addUserAddress', addressData, {
+
+    });
+  }
+  public loadUserAddresses(){
+    return this.httpclient.get(this.PATH_OF_API + '/getAllUserAddresses', {
+      responseType: 'json',
+    });
+  }
+
+  public deleteAddress(addressId: number){
+    return this.httpclient.delete(this.PATH_OF_API + '/deleteUserAddress/'+addressId, {
+
+    });
+  }
+  //-----------------USER PASSWORD--------------------------
+  saveNewPassword(passwordData: ChangePasswordRequest){
+    return this.httpclient.post(this.PATH_OF_API + '/changeUserPassword', passwordData, {
+    });
+  }
+  //Load user data
+  public loadUserData() {
+    return this.httpclient.get(this.PATH_OF_API + '/loadUserData', {
+      responseType: 'json',
+    });
+  }
   public forUser() {
     return this.httpclient.get(this.PATH_OF_API + '/forUser', {
       responseType: 'text',

@@ -16,14 +16,31 @@ export class ProductService {
     private httpclient: HttpClient,
     private authService: AuthService
   ) {}
-
-  public addNewProduct(productData: Product) {
-    return this.httpclient.post(this.PATH_OF_API + '/addNewProduct', productData, {
-      headers: this.requestHeader,
-    });
+  // ------------------Cart------------------
+  public addToCart(productId: number) {
+    return this.httpclient.get(this.PATH_OF_API + '/addToCart/'+productId );
   }
+
+  public getCartItems() {
+    return this.httpclient.get(this.PATH_OF_API + '/getCartItems');
+  }
+
+  public addNewProduct(productData: FormData) {
+    return this.httpclient.post(this.PATH_OF_API + '/addNewProduct', productData);
+  }
+  public removeProductFromCart(cartId: number) {
+    return this.httpclient.delete(this.PATH_OF_API + '/deleteCartItem/'+cartId);
+  }
+  // ------------------Product------------------
   public getCategories() {
     return this.httpclient.get(this.PATH_OF_API + '/getAllCategories', {
+    });
+  }
+  public addCategory(category: Category) {
+    return this.httpclient.post(this.PATH_OF_API + '/addNewCategory', category);
+  }
+  public getAllProducts(searchKeyword: string= "") {
+    return this.httpclient.get<Product[]>(this.PATH_OF_API + '/getAllProducts?searchKey='+searchKeyword, {
     });
   }
 }
