@@ -32,7 +32,7 @@ export class AdminComponent {
   // Table of orders
   orders:OrderUX[]=[];
   datasource = new MatTableDataSource<OrderUX>(this.orders);
-  displayedColumns: string[] = ['product name', 'price', 'date', 'order status'];
+  displayedColumns: string[] = ['product name', 'price', 'date', 'order status', "user"];
   //Statistics
   topUsers: User[] = [];
   topProducts: ProductUX[] = [];

@@ -19,10 +19,14 @@ export class ProfileComponent{
   profileForm: FormGroup;
   addressForm: FormGroup;
   passwordForm: FormGroup;
-  //Change any later
+
   user: User;
   userAddressesUX: AddressUX[] =[];
+
   orders: OrderUX[] = [];
+  displayedColumns: string[] = ['product name', 'price', 'date', 'order status'];
+
+  //dataSource = [];
   constructor(
     private toastr: ToastrService,
     private userService: UserService,
