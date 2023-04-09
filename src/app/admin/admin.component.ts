@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,11 @@ import { OrderUX } from '../models/OrderUX.model';
 import { User } from '../models/User.model';
 import { UserService } from '../service/user.service';
 import { ProductUX } from '../models/ProductUX.model';
+import {Dialog, DialogRef, DIALOG_DATA} from '@angular/cdk/dialog';
+export interface DialogData {
+  order:any
+  animal: any;
+}
 
 @Component({
   selector: 'app-admin',
@@ -50,7 +55,9 @@ export class AdminComponent {
       quantityInStock: 10,
       productImages: []
   }
-  //parameters: any;
+
+  animal: any = "";
+  order:any;
 
 
   constructor(
@@ -59,10 +66,20 @@ export class AdminComponent {
     private userService: UserService,
     private builder: FormBuilder,
     private toastr: ToastrService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialog: Dialog
     ) {}
+  openDialog(order): void {
+    const dialogRef = this.dialog.open<string>(CdkDialogOverviewExampleDialog, {
+      width: '250px',
+      data: {order: order, animal: this.animal},
+    });
 
-
+    dialogRef.closed.subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
   ngOnInit() {
     this.getAllOrders();
     this.getTopUsers();
@@ -101,6 +118,7 @@ export class AdminComponent {
       }
     );
   }
+  //
 
   get parameters(): FormArray {
     return this.productForm.get('parameters') as FormArray;
@@ -239,6 +257,15 @@ export class AdminComponent {
   }
 
 
+}
+
+@Component({
+  selector: 'cdk-dialog-overview-example-dialog',
+  templateUrl: 'cdk-dialog-overview-example-dialog.html',
+  styleUrls: ['cdk-dialog-overview-example-dialog.css'],
+})
+export class CdkDialogOverviewExampleDialog {
+  constructor(public dialogRef: DialogRef<any>, @Inject(DIALOG_DATA) public data: DialogData) {}
 }
 
 

@@ -1,0 +1,9 @@
+<p>Current Status: {{data.order.orderStatus}}</p>
+<div>
+  <label id="favorite-animal">SELECT NEXT STATUS</label>
+  <input for="favorite-animal" placeholder="Enter your name">
+</div>
+<div>
+  <button (click)="dialogRef.close(data.animal)">OK</button>
+  <button (click)="dialogRef.close()">Cancel</button>
+</div>

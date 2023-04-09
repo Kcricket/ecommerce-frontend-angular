@@ -26,6 +26,8 @@ import { AuthInterceptor } from './guard/auth.interceptor';
 import { CartComponent } from './cart/cart.component';
 import { ProductPreviewComponent } from './product-preview/product-preview.component';
 
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { ProductPreviewComponent } from './product-preview/product-preview.compo
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FormsModule
   ],
   providers: [
     AuthGuard,
